@@ -1,0 +1,27 @@
+## setup: unrelated sessions owned by nobody in this home
+created unrelated-busy
+home label: firstmate-453a9c5f
+sessions: [{"id":"session:01a16a2c-245a-7b1f-bb9e-50bb535c6718","label":"unrelated-busy","windows":["Window 93ff337c"]}]
+
+## spawn A
+create_task A -> session:01a16a2c-25b6-7d88-864e-d878519ea3c4 window:01a16a2c-25c7-7f07-aee4-1df8bbd8459b block:01a16a2c-25b6-7e09-a7f2-f517bcaee684
+state/.rex-home-session: session:01a16a2c-25b6-7d88-864e-d878519ea3c4
+sessions: [{"id":"session:01a16a2c-245a-7b1f-bb9e-50bb535c6718","label":"unrelated-busy","windows":["Window 93ff337c"]},{"id":"session:01a16a2c-25b6-7d88-864e-d878519ea3c4","label":"firstmate-453a9c5f","windows":["fm-alpha"]}]
+
+## agent renames its session (rex session rename session:01a16a2c-25b6-7d88-864e-d878519ea3c4 alpha-task-name)
+sessions: [{"id":"session:01a16a2c-245a-7b1f-bb9e-50bb535c6718","label":"unrelated-busy","windows":["Window 93ff337c"]},{"id":"session:01a16a2c-25b6-7d88-864e-d878519ea3c4","label":"alpha-task-name","windows":["fm-alpha"]}]
+
+## spawn B
+create_task B -> session:01a16a2c-25b6-7d88-864e-d878519ea3c4 window:01a16a2c-295a-78b2-83fe-0da4cc594753 block:01a16a2c-294b-70cf-a9e5-f254f3319438
+RESULT: B reused renamed session session:01a16a2c-25b6-7d88-864e-d878519ea3c4
+sessions: [{"id":"session:01a16a2c-245a-7b1f-bb9e-50bb535c6718","label":"unrelated-busy","windows":["Window 93ff337c"]},{"id":"session:01a16a2c-25b6-7d88-864e-d878519ea3c4","label":"alpha-task-name","windows":["fm-alpha","fm-beta"]}]
+
+## teardown A
+kill A rc=0
+sessions: [{"id":"session:01a16a2c-245a-7b1f-bb9e-50bb535c6718","label":"unrelated-busy","windows":["Window 93ff337c"]},{"id":"session:01a16a2c-25b6-7d88-864e-d878519ea3c4","label":"alpha-task-name","windows":["fm-beta"]}]
+
+## teardown B
+kill B rc=0
+sessions: [{"id":"session:01a16a2c-245a-7b1f-bb9e-50bb535c6718","label":"unrelated-busy","windows":["Window 93ff337c"]}]
+RESULT: per-home session(s) retired
+RESULT: unrelated session untouched

@@ -1,0 +1,27 @@
+## setup: unrelated sessions owned by nobody in this home
+created unrelated-busy
+home label: firstmate-453a9c5f
+sessions: [{"id":"session:01a16a2c-4185-7ef8-9af1-5616af43dcd4","label":"unrelated-busy","windows":["Window bfff7d3f"]}]
+
+## spawn A
+create_task A -> session:01a16a2c-42de-7cb2-8085-185aaed7de77 window:01a16a2c-42ef-7c2d-a089-a9369a8fe251 block:01a16a2c-42de-7d2f-9215-009ad23ed514
+state/.rex-home-session: <absent>
+sessions: [{"id":"session:01a16a2c-4185-7ef8-9af1-5616af43dcd4","label":"unrelated-busy","windows":["Window bfff7d3f"]},{"id":"session:01a16a2c-42de-7cb2-8085-185aaed7de77","label":"firstmate-453a9c5f","windows":["fm-alpha"]}]
+
+## agent renames its session (rex session rename session:01a16a2c-42de-7cb2-8085-185aaed7de77 alpha-task-name)
+sessions: [{"id":"session:01a16a2c-4185-7ef8-9af1-5616af43dcd4","label":"unrelated-busy","windows":["Window bfff7d3f"]},{"id":"session:01a16a2c-42de-7cb2-8085-185aaed7de77","label":"alpha-task-name","windows":["fm-alpha"]}]
+
+## spawn B
+create_task B -> session:01a16a2c-465a-7f0b-b67f-e5ed1bd133d4 window:01a16a2c-466a-7c8e-ba5c-818708617d7f block:01a16a2c-465b-7055-b1ac-b73fbbfc81b1
+RESULT: B created NEW session session:01a16a2c-465a-7f0b-b67f-e5ed1bd133d4 (A was session:01a16a2c-42de-7cb2-8085-185aaed7de77)
+sessions: [{"id":"session:01a16a2c-4185-7ef8-9af1-5616af43dcd4","label":"unrelated-busy","windows":["Window bfff7d3f"]},{"id":"session:01a16a2c-42de-7cb2-8085-185aaed7de77","label":"alpha-task-name","windows":["fm-alpha"]},{"id":"session:01a16a2c-465a-7f0b-b67f-e5ed1bd133d4","label":"firstmate-453a9c5f","windows":["fm-beta"]}]
+
+## teardown A
+kill A rc=0
+sessions: [{"id":"session:01a16a2c-4185-7ef8-9af1-5616af43dcd4","label":"unrelated-busy","windows":["Window bfff7d3f"]},{"id":"session:01a16a2c-42de-7cb2-8085-185aaed7de77","label":"alpha-task-name","windows":[]},{"id":"session:01a16a2c-465a-7f0b-b67f-e5ed1bd133d4","label":"firstmate-453a9c5f","windows":["fm-beta"]}]
+
+## teardown B
+kill B rc=0
+sessions: [{"id":"session:01a16a2c-4185-7ef8-9af1-5616af43dcd4","label":"unrelated-busy","windows":["Window bfff7d3f"]},{"id":"session:01a16a2c-42de-7cb2-8085-185aaed7de77","label":"alpha-task-name","windows":[]}]
+RESULT: ORPHANED per-home session(s) remain
+RESULT: unrelated session untouched

@@ -1,0 +1,21 @@
+## other home must not adopt or retire home1's renamed session
+home1 label=firstmate-453a9c5f recorded=session:01a16a2c-8ca6-7877-a339-369a538189a5
+home2 label=firstmate-453a9c5f
+RESULT: home2 created its own session session:01a16a2c-8e6d-7ba0-b628-eaf86b2a7bff (did not adopt session:01a16a2c-8ca6-7877-a339-369a538189a5)
+closed home1 block directly; home1 session now: {"id":"session:01a16a2c-8ca6-7877-a339-369a538189a5","label":"h1-renamed","windows":[]}
+after home2 retire attempt on home1's empty renamed session: {"id":"session:01a16a2c-8ca6-7877-a339-369a538189a5","label":"h1-renamed","windows":[]}
+home2 own teardown: 
+
+## launcher's own session is never killed even if recorded and empty
+retire with REX_SESSION=session:01a16a2c-8ca6-7877-a339-369a538189a5: {"id":"session:01a16a2c-8ca6-7877-a339-369a538189a5","label":"h1-renamed","windows":[]}
+retire by owning home1 without launcher claim: 
+
+## empty foreign session not recorded and not labeled is never killed
+foreign before: {"id":"session:01a16a2c-946f-7e50-bda8-5b0589685bdd","label":"foreign-empty","windows":["Window 759773a6"]}
+foreign after home1 retire attempt: {"id":"session:01a16a2c-946f-7e50-bda8-5b0589685bdd","label":"foreign-empty","windows":["Window 759773a6"]}
+## empty foreign session (not recorded, not home-labeled) is never killed (rerun with correct block path)
+foreign before: {"id":"session:01a16a2c-946f-7e50-bda8-5b0589685bdd","label":"foreign-empty","windows":[]}
+foreign after home1 retire attempt: {"id":"session:01a16a2c-946f-7e50-bda8-5b0589685bdd","label":"foreign-empty","windows":[]}
+
+Note: blank output after "home2 own teardown:" and "retire by owning home1 without launcher claim:" means session.view returned nothing, i.e. the session was killed (gone).
+All runs used an isolated real Rex server (REX_RUNTIME_DIR=/tmp/rexlab.J9v9/run, rex server run --state-dir), never the operator Rex server.
